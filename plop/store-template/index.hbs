@@ -1,0 +1,12 @@
+import { defineStore, getStore } from '@oceancode/framework';
+export const use{{upperDataName}}Store = defineStore('use{{upperDataName}}Store', {
+  state: () => {
+    return { }
+  },
+  getters: {},
+  actions: {}
+})
+
+export function use{{upperDataName}}() {
+  return use{{upperDataName}}Store(getStore());
+}
