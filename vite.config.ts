@@ -9,16 +9,10 @@ import { wrapperEnv } from './build/utils';
 import { createProxy } from './build/proxy';
 import { visualizer } from 'rollup-plugin-visualizer'
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
-
 import Components from 'unplugin-vue-components/vite';
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
-}
-
-function convertCamelCaseToDash(str: string) {
-  return str.replace(/([A-Z])/g, (match, letter, index) =>
-    index === 0 ? letter.toLowerCase() : `-${letter.toLowerCase()}`)
 }
 
 export default ({ command, mode }: ConfigEnv): UserConfig => {
@@ -64,12 +58,15 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           }
         }
       }),
+      Components({
+        resolvers: [ NaiveUiResolver() ],
+      }),
       viteMockServe({
         mockPath: './mock',
         // 开发打包开关
         localEnabled: true,
         // 生产打包开关
-        prodEnabled: true,
+        prodEnabled: false,
         // 打开后，可以读取 ts 文件模块。 请注意，打开后将无法监视.js 文件
         supportTs: true,
         // 监视文件更改

@@ -1,6 +1,7 @@
-import { ResultData, useRequest } from '@oceancode/ocean-ui';
+import { ResultData, useRequest } from '@oceancode/ocean-ui'
 const request = useRequest()
 const API_PREFIX = import.meta.env.VITE_GLOB_API_URL || ''
+
 /**
  * ping
  * @returns ping
