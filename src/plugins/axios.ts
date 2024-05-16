@@ -3,6 +3,10 @@ import axios, { AxiosError, AxiosInstance, AxiosPromise } from 'axios'
 
 const user = useUser()
 const message = useMessage()
+
+function hasData(data:any):boolean{
+  return data.hasOwnProperty('data') || data.hasOwnProperty('results')
+}
 class AxiosRequest implements RequestPlugin {
   private service: AxiosInstance
   constructor(baseUrl:string){
@@ -79,6 +83,13 @@ function handleErrorWrapper<T>(p: AxiosPromise): Promise<ResultData<T>> {
         data: data.results || data.data,
         total: data.total,
       } as ResultData
+      if(!hasData(data)){
+        return {
+          data: data,
+          code: ResultEnum.SUCCESS,
+          success: true
+        }
+      }
 
       if (resData.code === ResultEnum.SUCCESS) {
         resData.success = true;
