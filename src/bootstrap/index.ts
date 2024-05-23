@@ -1,13 +1,15 @@
 import type { App } from "vue"
-import { PageContext,PageLayoutContext } from "@/components"
-import { setupOcean } from '@oceancode/ocean-ui'
+// import { PageContext,PageLayoutContext } from "@/components"
+// import { setupOcean } from '@oceancode/ocean-ui'
 import { setupCommonComponents } from './ocean'
 import { setupNaive } from './naiveui'
+import { setupPlugins } from '@/plugins'
 
 export async function bootstrap(app: App) {
-  setupOcean(app)
-  setupCommonComponents(app)
-  setupNaive(app)
-  app.component('PageContext', PageContext)
-  app.component('PageLayoutContext', PageLayoutContext)
+  // setupOcean(app)
+  // setupCommonComponents(app)
+  // setupNaive(app)
+  // app.component('PageContext', PageContext)
+  // app.component('PageLayoutContext', PageLayoutContext)
+  setupPlugins()
 }

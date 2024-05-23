@@ -1,4 +1,4 @@
-import { apiResponseWrapper } from '@oceancode/ocean-ui'
+import { apiResponseWrapper,OIcon } from '@oceancode/ocean-wui'
 import { ping as pingApi } from '@/api'
 
 import { HomeOutline } from "@vicons/ionicons5";
@@ -8,61 +8,79 @@ export function ping(): Promise<string>{
   return apiResponseWrapper(pingApi())
 }
 
-export function loadSystemMenu(): Promise<Array<any>>{
+export function loadNavMenu():Promise<Array<any>>{
   return Promise.resolve([
     {
-      id: 1,
-      title: '首页',
-      router: {
-        name: 'home'
-      },
-      permission:{
-        and: ['login']
-      },
-      icon: {
-        component: HomeOutline,
-        size: 18,
-        color: '#fff'
+      label:'开源版本功能',
+      key:'1',
+      router:{
+        name:'home'
       }
     },
     {
-      id: 2,
-      title: '应用管理',
-      icon: {
-        component:User, 
-        size:18,
-        color: '#fff'
-      },
-      children: [
-        {
-          id: 3,
-          title: '应用列表',
-          icon: {
-            component:User,
-            size:18,
-            color: '#000'
-          },
-          router: {
-            name: 'appList'
-          }
-        }
-      ]
+      label:'企业版本功能',
+      key:'2',
+      router:{
+        name:'test'
+      }
     },
     {
-      id: 3,
-      title: '权限管理',
-      icon: {
-        component: TwoFactorAuthentication,
-        size: 18,
-        color: '#fff'
+      label:'插件市场',
+      key:'3'
+    }
+  ])
+}
+
+export function loadSystemMenu(): Promise<Array<any>>{
+  return Promise.resolve([
+    {
+      label:'系统首页',
+      key:'home',
+      router:{
+        name:'home'
       },
-      children: [
-        {
-          id: 4,
-          title: '权限分组',
-          router: {
-            name: 'roleGroupList'
+      icon:{
+        component:OIcon,
+        props:{
+          component:HomeOutline,
+          props:{
+            size: 25
           }
+        }
+      },
+    },
+    {
+      label:'组织架构',
+      key:'part',
+      router:{
+        name:'test'
+      },
+      icon:{
+        component:OIcon,
+        props:{
+          component:User
+        }
+      },
+      children:[
+        {
+          label:'组织管理',
+          key:'1',
+          router:{
+            name:'home'
+          }
+        },
+        {
+          label:'用户列表',
+          key:'11',
+          children:[
+            {
+              label:'aaa',
+              key:'2',
+              router:{
+                name:'test'
+              }
+            }
+          ]
         }
       ]
     }

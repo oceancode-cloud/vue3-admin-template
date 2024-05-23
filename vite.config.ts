@@ -37,6 +37,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
           find: 'vue-i18n',
           replacement: 'vue-i18n/dist/vue-i18n.cjs.js' //解决i8n警告
         },
+        {
+          find:'@oceancode/ocean-ui',
+          replacement:'@oceancode/ocean-wui'
+        }
       ],
       dedupe: ['vue']
     },
@@ -59,7 +63,16 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         }
       }),
       Components({
-        resolvers: [ NaiveUiResolver() ],
+        resolvers: [ 
+          NaiveUiResolver(),
+          {
+            type: 'component',
+            resolve: (name: string) => {
+              if (name.match(/^(O[A-Z]|o-[a-z])/))
+                return { name, from: '@oceancode/ocean-wui' }
+            }
+          }
+        ],
       }),
       viteMockServe({
         mockPath: './mock',
