@@ -21,6 +21,9 @@ export function routerPlugin():RouterPlugin{
       if(r.replace){
         window.location.reload()
       }
+    },
+    toLogin:()=>{
+      // router.push({name:'login'})
     }
   }
 }
