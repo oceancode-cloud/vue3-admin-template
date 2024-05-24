@@ -86,3 +86,9 @@ export function loadSystemMenu(): Promise<Array<any>>{
     }
   ])
 }
+
+export function listUserPermission(): Promise<any>{
+  return Promise.resolve({
+    user_list:['user:add','user:delete'],
+  })
+}

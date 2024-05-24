@@ -1,15 +1,8 @@
 import type { App } from "vue"
-// import { PageContext,PageLayoutContext } from "@/components"
-// import { setupOcean } from '@oceancode/ocean-ui'
-import { setupCommonComponents } from './ocean'
-import { setupNaive } from './naiveui'
+import { checkPermission } from '@oceancode/ocean-wui'
 import { setupPlugins } from '@/plugins'
 
 export async function bootstrap(app: App) {
-  // setupOcean(app)
-  // setupCommonComponents(app)
-  // setupNaive(app)
-  // app.component('PageContext', PageContext)
-  // app.component('PageLayoutContext', PageLayoutContext)
-  setupPlugins()
+  app.config.globalProperties.$checkPermission = checkPermission
+  setupPlugins(app)
 }

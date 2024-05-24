@@ -1,60 +1,54 @@
-import { RequestPlugin,RequestConfig,ResultData,useUser,ResultEnum,useMessage } from '@oceancode/ocean-ui'
+import { RequestPlugin,RequestConfig,ResultData,useUser,ResultEnum,PluginType } from '@oceancode/ocean-wui'
 import axios, { AxiosError, AxiosInstance, AxiosPromise } from 'axios'
-
-const user = useUser()
-const message = useMessage()
 
 function hasData(data:any):boolean{
   return data.hasOwnProperty('data') || data.hasOwnProperty('results')
 }
-class AxiosRequest implements RequestPlugin {
-  private service: AxiosInstance
-  constructor(baseUrl:string){
-    this.service = axios.create({
-      baseURL: baseUrl, 
-      timeout: 5000
-    })
 
-    this.service.interceptors.request.use(
-      config => {
-        const token = user.getToken()
-        if (token) {
-          config.headers['Authorization'] = ('Bearer ' + token) as any;
-        }
-        const projectId = user.getProjectId()
-        if(projectId){
-          config.headers['x-project-id'] = projectId
-        }
-        return config
-      },
-      error => {
-        return Promise.reject(error)
-      }
-    )
+const service: AxiosInstance =  axios.create({
+  timeout: 5000
+})
 
-    this.service.interceptors.response.use(
-      response => {
-        return response
-      },
-      error => {
-        return Promise.reject(error)
-      }
-    )
+service.interceptors.request.use(
+  config => {
+    const token = useUser().getToken()
+    if (token) {
+      config.headers['Authorization'] = ('Bearer ' + token) as any;
+    }
+    const projectId = useUser().getProjectId()
+    if(projectId){
+      config.headers['x-project-id'] = projectId
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error)
   }
+)
 
-  get<T>(url: string,params:any,config?:RequestConfig):Promise<ResultData<T>> {
-    return handleErrorWrapper(this.service.get(url,{params:params,...config}))
+service.interceptors.response.use(
+  response => {
+    return response
+  },
+  error => {
+    return Promise.reject(error)
   }
-  post<T>(url: string,params:any,config?:RequestConfig):Promise<ResultData<T>> {
-    return handleErrorWrapper(this.service.post(url,params,config))
-  }
-  put<T>(url: string,params:any,config?:RequestConfig):Promise<ResultData<T>> {
-    return handleErrorWrapper(this.service.put(url,params,config))
-  }
-  delete<T>(url: string,params:any,config?:RequestConfig):Promise<ResultData<T>> {
-    return handleErrorWrapper(this.service.delete(url,{params:params,...config}))
-  }
+)
+
+function get<T>(url: string,params:any,config?:RequestConfig):Promise<ResultData<T>> {
+  return handleErrorWrapper(service.get(url,{params:params,...config}))
 }
+function post<T>(url: string,params:any,config?:RequestConfig):Promise<ResultData<T>> {
+  return handleErrorWrapper(service.post(url,params,config))
+}
+function put<T>(url: string,params:any,config?:RequestConfig):Promise<ResultData<T>> {
+  return handleErrorWrapper(service.put(url,params,config))
+}
+
+function _delete<T>(url: string,params:any,config?:RequestConfig):Promise<ResultData<T>> {
+  return handleErrorWrapper(service.delete(url,{params:params,...config}))
+}
+
 function parseResonseData(data: any): any {
   const resData = {
     code: data.code,
@@ -72,6 +66,7 @@ function parseResonseData(data: any): any {
 
   return resData;
 }
+
 function handleErrorWrapper<T>(p: AxiosPromise): Promise<ResultData<T>> {
   return new Promise((resolve,reject)=>{
     p.then(response=>{
@@ -96,7 +91,7 @@ function handleErrorWrapper<T>(p: AxiosPromise): Promise<ResultData<T>> {
         resolve(resData);
       } else if (resData.code === ResultEnum.NOT_LOGIN) {
         window['$message'].error('用户信息过期，请重新登录');
-        user.toLogin()
+        useUser().toLogin()
       } else {
         const msg = '错误码:' + resData.code + ' ' + (resData.message || '');
         window['$message'].error(msg);
@@ -106,11 +101,26 @@ function handleErrorWrapper<T>(p: AxiosPromise): Promise<ResultData<T>> {
       const status = response.status
       if(status===400){
         const data = response.data
-        message.error({code:data.code,message:data.message})
+        // message.error({code:data.code,message:data.message})
+      }else if(status===401){
+        useUser().toLogin()
+      }else if(status===403){
+        useUser().refreshPermission(true).finally(()=>{
+          reject({ error: error, ...parseResonseData(response.data) })
+        })
+        return
       }
       reject({ error: error, ...parseResonseData(response.data) });
     })
   })
 }
 
-export const axoisRequest = new AxiosRequest('')
+export function axoisRequest(){
+  return {
+    name: PluginType.REQUEST,
+    get: get,
+    put: put,
+    post: post,
+    delete: _delete
+  }
+}

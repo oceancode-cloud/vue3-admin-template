@@ -1,5 +1,10 @@
 <template>
   <o-root-context>
-    <router-view></router-view>
+    <AppContext>
+      <router-view></router-view>
+    </AppContext>
   </o-root-context>
 </template>
+<script setup>
+import { AppContext } from '@/components';
+</script>

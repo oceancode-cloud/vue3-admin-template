@@ -22,6 +22,7 @@ export function routerPlugin():RouterPlugin{
         window.location.reload()
       }
     },
+    getMeta:()=>router.currentRoute.value.meta,
     toLogin:()=>{
       // router.push({name:'login'})
     }

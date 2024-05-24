@@ -21,6 +21,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
   const viteEnv = wrapperEnv(env);
   const { VITE_PUBLIC_PATH, VITE_DROP_CONSOLE, VITE_PORT, VITE_GLOB_PROD_MOCK, VITE_PROXY } =
     viteEnv;
+  const isProduction = mode === 'production'
   return {
     base: VITE_PUBLIC_PATH,
     resolve: {
@@ -40,6 +41,10 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
         {
           find:'@oceancode/ocean-ui',
           replacement:'@oceancode/ocean-wui'
+        },
+        {
+          find:'naive-ui',
+          replacement: pathResolve('./node_modules/naive-ui')
         }
       ],
       dedupe: ['vue']
@@ -103,8 +108,8 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     build: {
       target: 'es2015',
       outDir: OUTPUT_DIR,
-      // minify: 'terser', // 如果需要用terser混淆，可打开这两行
-      // terserOptions: terserOptions,
+      minify: isProduction ? 'terser': false, // 如果需要用terser混淆，可打开这两行
+      terserOptions: isProduction ? terserOptions : undefined,
       rollupOptions: rollupOptions,
       chunkSizeWarningLimit: chunkSizeWarningLimit,
     }
