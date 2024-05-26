@@ -10,8 +10,7 @@ import { I18nPlugin,PluginType,useRouter } from '@oceancode/ocean-wui'
 
 function loadLanguageAsync(i18n,lang:string) {
   const file = lang.replace('-','')
-  const langDir = '../i18n/'
-  return import(/* webpackChunkName: "lang-request" */`${langDir}${file}.json`).then((langfile) => {
+  return import(/* webpackChunkName: "lang-request" */`../i18n/${file}.json`).then((langfile) => {
     i18n.global.setLocaleMessage(lang, langfile);
     i18n.global.locale = lang;
   })
@@ -54,8 +53,8 @@ export function i18nPlugin(i18n,app:App){
 let i18n
 export function setupI18n(app:App){
   i18n =  createI18n({
-    locale: 'zhCn',
-    fallbackLocale:'zhCn',
+    locale: navigator.language,
+    fallbackLocale:navigator.language,
     globalInjection: false,
     allowComposition: true,
     silentTranslationWarn:true,
