@@ -15,7 +15,7 @@ const routeList = [
     id:3,
     path: '/login',
     name:'login',
-    component: () => import('@/views/home.vue')
+    component: () => import('@/views/login/index.vue')
   },
   {
     id:4,
@@ -28,7 +28,8 @@ const routeList = [
     path:'',
     name:'home',
     meta:{
-      resourceId: 'user_list'
+      resourceId: 'user_list',
+      permissions:['login']
     },
     component:()=>import('@/views/home.vue')
   },

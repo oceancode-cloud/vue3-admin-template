@@ -31,14 +31,14 @@ import { loadSystemMenu,loadNavMenu } from '@/services'
 import { useUser } from '@oceancode/ocean-wui'
 import UserInfo from './UserInfo.vue'
 const user = useUser()
-user.setLoginResponse({
-  token:'123',
-  userInfo:{
-    username:'qinjiawang',
-    nickname:'aaaa',
-    avatar:'https://07akioni.oss-cn-beijing.aliyuncs.com/demo1.JPG'
-  }
-})
+// user.setLoginResponse({
+//   token:'123',
+//   userInfo:{
+//     username:'qinjiawang',
+//     nickname:'aaaa',
+//     avatar:'https://07akioni.oss-cn-beijing.aliyuncs.com/demo1.JPG'
+//   }
+// })
 const userOptions = [
   {
     label:'A',

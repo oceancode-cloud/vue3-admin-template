@@ -3,11 +3,6 @@ import { createI18n } from 'vue-i18n'
 import { useI18n } from "vue-i18n";
 import { I18nPlugin,PluginType,useRouter } from '@oceancode/ocean-wui'
 
-// const localLang = navigator.language.split('-')[0];
-// const storageLang = window.localStorage.getItem('locale')?.split('"')[1].split('"')[0].toLocaleLowerCase() || 'en';
-// const c = (storageLang.toLocaleLowerCase() !== 'zh' && storageLang.toLocaleLowerCase() !== 'en') ? 'en' : storageLang;
-
-
 function loadLanguageAsync(i18n,lang:string) {
   const file = lang.replace('-','')
   return import(/* webpackChunkName: "lang-request" */`../i18n/${file}.json`).then((langfile) => {
