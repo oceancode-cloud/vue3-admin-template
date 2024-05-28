@@ -1,15 +1,25 @@
 <template>
   <div class="user-info">
     <n-dropdown trigger="hover" :options="options" @select="handleSelect">
-      <o-avatar round :src="userInfo.avatar" v-if="userInfo">
+      <span>
+        <o-avatar round :src="userInfo.avatar" v-if="userInfo">
+            <template>
+              qinjiawang
+            </template>
+            <template #icon>
+              <UserOutlined/>
+            </template>
+        </o-avatar>
+      </span>
+    </n-dropdown>
+    <!-- <o-avatar round :src="userInfo.avatar" v-if="userInfo">
           <template>
             qinjiawang
           </template>
           <template #icon>
             <UserOutlined/>
           </template>
-      </o-avatar>
-    </n-dropdown>
+      </o-avatar> -->
   </div>
   
 </template>

@@ -11,8 +11,6 @@ import router from '@/router'
   getQuery():Record<string,any>
 */
 export function routerPlugin():RouterPlugin{
-  console.log(router)
-  
   return {
     name: PluginType.ROUTER,
     toHome:()=>router.push({name:'home'}),

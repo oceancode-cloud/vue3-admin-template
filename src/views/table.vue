@@ -39,7 +39,6 @@ const Table = useDataTable({
       key:'status',
       traits:['status'],
       onClick(row,value){
-        console.log(row,value)
         return Promise.resolve()
       }
     },
@@ -70,7 +69,6 @@ const Table = useDataTable({
         {
           type:'delete',
           onClick(row){
-            console.log(row)
           }
         }
       ]
@@ -90,7 +88,6 @@ const Table = useDataTable({
           type:'a'
         })
       }
-      console.log('=====load',params)
       return Promise.resolve(list)
     }
   }

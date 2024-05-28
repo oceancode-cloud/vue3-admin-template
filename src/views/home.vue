@@ -23,7 +23,6 @@ import FormCom from './form.vue'
 import TableCom from './table.vue'
 import { getCurrentInstance } from 'vue'
 const { proxy } = getCurrentInstance() as any
-console.log(proxy)
 const inputVal = ref(2)
 import {ping} from '@/services'
 

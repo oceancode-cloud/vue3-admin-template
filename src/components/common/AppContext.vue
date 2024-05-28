@@ -12,7 +12,6 @@ const user = useUser()
 watch(
   () => route.fullPath,
   (val) => {
-    console.log('===router change',val)
     user.refreshPermission()
   },
   { immediate: true }

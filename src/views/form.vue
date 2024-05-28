@@ -44,7 +44,6 @@ const Form = useForm({
       },
       on: {
         change(newVal,oldVal,params){
-          console.log(newVal,oldVal,params)
         }
       }
     },
@@ -55,7 +54,6 @@ const Form = useForm({
   ],
   on:{
     submit(params){
-      console.log('=====form submit',params)
     }
   }
 })

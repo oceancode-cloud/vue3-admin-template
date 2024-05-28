@@ -43,7 +43,6 @@ export function OceanUiResolver(name,namespace: string = 'n'){
 }
 function doOceanUiResolver(name: string,namespace: string = 'n'){
   if(!name)return
-  console.log('============',name)
   let componentName
   let simpleName
   let from = '@oceancode/ocean-ui'

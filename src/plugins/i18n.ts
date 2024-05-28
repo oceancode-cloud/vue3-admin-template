@@ -38,7 +38,6 @@ export function i18nPlugin(i18n,app:App){
       }
       
       const targetKey = `${resourceId ? resourceId+'.':''}${key}`
-      console.log('====i18n',targetKey)
       return i18n.global.t(targetKey)
     }
   }

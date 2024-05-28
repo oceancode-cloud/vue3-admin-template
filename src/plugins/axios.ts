@@ -1,4 +1,4 @@
-import { RequestPlugin,RequestConfig,ResultData,useUser,ResultEnum,PluginType } from '@oceancode/ocean-wui'
+import { RequestPlugin,RequestConfig,ResultData,useUser,useRouter,ResultEnum,PluginType } from '@oceancode/ocean-wui'
 import axios, { AxiosError, AxiosInstance, AxiosPromise } from 'axios'
 
 function hasData(data:any):boolean{
@@ -103,7 +103,8 @@ function handleErrorWrapper<T>(p: AxiosPromise): Promise<ResultData<T>> {
         const data = response.data
         // message.error({code:data.code,message:data.message})
       }else if(status===401){
-        useUser().toLogin()
+        useUser().logout()
+        useRouter().toLogin()
       }else if(status===403){
         useUser().refreshPermission(true).finally(()=>{
           reject({ error: error, ...parseResonseData(response.data) })
