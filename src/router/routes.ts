@@ -31,7 +31,7 @@ const routeList = [
       resourceId: 'user_list',
       permissions:['login']
     },
-    component:()=>import('@/views/home.vue')
+    component:()=>import('@/views/app/index.vue')
   },
   {
     id:6,

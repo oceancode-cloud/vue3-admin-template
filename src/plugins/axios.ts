@@ -2,7 +2,7 @@ import { RequestPlugin,RequestConfig,ResultData,useUser,useRouter,ResultEnum,Plu
 import axios, { AxiosError, AxiosInstance, AxiosPromise } from 'axios'
 
 function hasData(data:any):boolean{
-  return data.hasOwnProperty('data') || data.hasOwnProperty('results')
+  return (data.hasOwnProperty('data') || data.hasOwnProperty('results')) && data.hasOwnProperty('code')
 }
 
 const service: AxiosInstance =  axios.create({
@@ -79,11 +79,11 @@ function handleErrorWrapper<T>(p: AxiosPromise): Promise<ResultData<T>> {
         total: data.total,
       } as ResultData
       if(!hasData(data)){
-        return {
+        return resolve({
           data: data,
           code: ResultEnum.SUCCESS,
           success: true
-        }
+        })
       }
 
       if (resData.code === ResultEnum.SUCCESS) {

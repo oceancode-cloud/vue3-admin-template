@@ -5,6 +5,7 @@ import {
   OIcon,
   OPopconfirm,
   OButton,
+  OSpace,
 } from '@oceancode/ocean-wui'
 
 export function setupOcean(app:App){
@@ -14,4 +15,5 @@ export function setupOcean(app:App){
   app.component("OInput",OInput)
   app.component("OPopconfirm",OPopconfirm)
   app.component("OButton",OButton)
+  app.component("OSpace",OSpace)
 }
