@@ -1,7 +1,7 @@
 <template>
   <o-root-context>
     <AppContext>
-      <router-view></router-view>
+      <app-router></app-router>
     </AppContext>
   </o-root-context>
 </template>
