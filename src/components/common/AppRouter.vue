@@ -6,5 +6,10 @@
   </router-view>
   <router-view v-else></router-view>
 </template>
-<script lang="ts" setup name="AppRouter">
+<script lang="ts">
+export default {
+  name:'AppRouter'
+}
+</script>
+<script lang="ts" setup>
 </script>
