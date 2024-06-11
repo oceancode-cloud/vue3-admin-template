@@ -20,6 +20,11 @@ export function routerPlugin():RouterPlugin{
         window.location.reload()
       }
     },
+    open:(r)=>{
+      const routeData = router.resolve(r)
+      window.open(routeData.href, '_blank');
+    },
+    getParams:()=>router.currentRoute.value.params,
     getMeta:()=>router.currentRoute.value.meta,
     toLogin:()=>{
       router.push({name:'login'})
