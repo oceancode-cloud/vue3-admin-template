@@ -25,6 +25,7 @@ export function routerPlugin():RouterPlugin{
       window.open(routeData.href, '_blank');
     },
     getParams:()=>router.currentRoute.value.params,
+    getQuery:()=>router.currentRoute.value.query,
     getMeta:()=>router.currentRoute.value.meta,
     toLogin:()=>{
       router.push({name:'login'})
