@@ -14,11 +14,14 @@ export function routerPlugin():RouterPlugin{
   return {
     name: PluginType.ROUTER,
     toHome:()=>router.push({name:'home'}),
+    getName:()=>router.currentRoute.value.name,
     push:(r: any)=>{
       router.push(r)
-      if(r.replace){
-        window.location.reload()
-      }
+      .finally(()=>{
+        if(r.replace){
+          window.location.reload()
+        }
+      })
     },
     open:(r)=>{
       const routeData = router.resolve(r)
